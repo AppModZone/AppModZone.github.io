@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 appCard.appendChild(appCategory);
 
                 appCard.addEventListener('click', () => {
-                    window.location.href = app-details.html?id=${app.id};
+                    window.location.href = `app-details.html?id=${app.id}`;
                 });
 
                 container.appendChild(appCard);
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 categoryCard.className = 'category-card';
 
                 const categoryLink = document.createElement('a');
-                categoryLink.href = category-apps.html?category=${category};
+                categoryLink.href = `category-apps.html?category=${category}`;
                 categoryLink.textContent = category;
 
                 categoryCard.appendChild(categoryLink);
@@ -71,20 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayAppDetails(app) {
         if (appDetails) {
             appName.textContent = app.name;
-            appDetails.innerHTML = 
+            appDetails.innerHTML = `
                 <img class="app-icon" src="${app.icon}" alt="${app.name}">
                 <p>${app.description}</p>
                 <p>Versión: ${app.version}</p>
                 <p>Fecha de subida: ${app.uploadDate}</p>
                 <div class="screenshots">
-                    ${app.images.map(image => <img src="${image}" alt="${app.name} screenshot">).join('')}
+                    ${app.images.map(image => `<img src="${image}" alt="${app.name} screenshot">`).join('')}
                 </div>
                 <div class="download-links">
-                    ${app.downloadLinks.map(link => 
+                    ${app.downloadLinks.map(link => `
                         <a href="${link.url}" class="download-link" data-warning="${link.warning || ''}">${link.label}</a>
-                    ).join('')}
+                    `).join('')}
                 </div>
-            ;
+            `;
 
             // Añadir eventos para mostrar advertencias
             document.querySelectorAll('.download-link').forEach(link => {
