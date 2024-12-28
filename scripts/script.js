@@ -86,6 +86,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             ;
 
+if (appDetails) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const appId = urlParams.get('id');
+    console.log("App ID encontrado:", appId); // Agregado para depuración
+
+    const app = apps.find(app => app.id == appId);
+    if (app) {
+        document.title = app.name; // Cambiar el título
+        displayAppDetails(app);
+    } else {
+        console.error("No se encontró la aplicación con el ID:", appId);
+    }
+}
+
             // Añadir eventos para mostrar advertencias
             document.querySelectorAll('.download-link').forEach(link => {
                 link.addEventListener('click', (event) => {
