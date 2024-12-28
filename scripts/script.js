@@ -67,37 +67,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Función para mostrar los detalles de una aplicación
-    function displayAppDetails(app) {
-        if (appDetails) {
-            appName.textContent = app.name;
-            appDetails.innerHTML = `
-                <img class="app-icon" src="${app.icon}" alt="${app.name}">
-                <p>${app.description}</p>
-                <p>Versión: ${app.version}</p>
-                <p>Fecha de subida: ${app.uploadDate}</p>
-                <div class="screenshots">
-                    ${app.images.map(image => `<img src="${image}" alt="${app.name} screenshot">`).join('')}
-                </div>
-                <div class="download-links">
-                    ${app.downloadLinks.map(link => `
-                        <a href="${link.url}" class="download-link" data-warning="${link.warning || ''}">${link.label}</a>
-                    `).join('')}
-                </div>
-            `;
+// Función para mostrar los detalles de una aplicación
+function displayAppDetails(app) {
+    if (appDetails) {
+        // Cambiar el título de la página al nombre de la aplicación
+        document.title = app.name;
 
-            // Añadir eventos para mostrar advertencias
-            document.querySelectorAll('.download-link').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    const warning = link.getAttribute('data-warning');
-                    if (warning) {
-                        event.preventDefault();
-                        showModal(warning, link.href);
-                    }
-                });
+        appName.textContent = app.name;
+        appDetails.innerHTML = `
+            <img class="app-icon" src="${app.icon}" alt="${app.name}">
+            <p>${app.description}</p>
+            <p>Versión: ${app.version}</p>
+            <p>Fecha de subida: ${app.uploadDate}</p>
+            <div class="screenshots">
+                ${app.images.map(image => `<img src="${image}" alt="${app.name} screenshot">`).join('')}
+            </div>
+            <div class="download-links">
+                ${app.downloadLinks.map(link => `
+                    <a href="${link.url}" class="download-link" data-warning="${link.warning || ''}">${link.label}</a>
+                `).join('')}
+            </div>
+        `;
+
+        // Añadir eventos para mostrar advertencias
+        document.querySelectorAll('.download-link').forEach(link => {
+            link.addEventListener('click', (event) => {
+                const warning = link.getAttribute('data-warning');
+                if (warning) {
+                    event.preventDefault();
+                    showModal(warning, link.href);
+                }
             });
-        }
+        });
     }
+}
 
     // Función para mostrar el modal de advertencia
     function showModal(message, url) {
@@ -195,23 +198,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-// Cambiar el título de la página en la sección de detalles
-if (appDetails) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const appId = urlParams.get('id');
-    const app = apps.find(app => app.id == appId);
-    if (app) {
-        displayAppDetails(app);
-        document.title = app.name; // Cambia el título de la página
-    }
-}
-// Cambiar el título de la página en la sección de categorías
-if (categoryAppList) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const category = urlParams.get('category');
-    if (category) {
-        categoryName.textContent = category;
-        document.title = `Categoría: ${category}`; // Cambia el título de la página
-        displayCategoryApps(apps, category);
-    }
-}
