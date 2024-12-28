@@ -195,3 +195,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// Cambiar el título de la página en la sección de detalles
+if (appDetails) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const appId = urlParams.get('id');
+    const app = apps.find(app => app.id == appId);
+    if (app) {
+        displayAppDetails(app);
+        document.title = app.name; // Cambia el título de la página
+    }
+}
+// Cambiar el título de la página en la sección de categorías
+if (categoryAppList) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('category');
+    if (category) {
+        categoryName.textContent = category;
+        document.title = `Categoría: ${category}`; // Cambia el título de la página
+        displayCategoryApps(apps, category);
+    }
+}
