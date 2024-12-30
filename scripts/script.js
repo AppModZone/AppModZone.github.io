@@ -89,59 +89,57 @@ function displayAppDetails(app) {
             </div>
         `;
 
-        // Añadir eventos para mostrar advertencias
-        document.querySelectorAll('.download-link').forEach(link => {
-            link.addEventListener('click', (event) => {
-                const warning = link.getAttribute('data-warning');
-                if (warning) {
-                    event.preventDefault();
-                    showModal(warning, link.href);
-                }
-            });
-        });
-    }
+// Añadir eventos para mostrar advertencias
+document.querySelectorAll('.download-link').forEach(link => {
+    link.addEventListener('click', (event) => {
+        const warning = link.getAttribute('data-warning');
+        if (warning) {
+            event.preventDefault();
+            showModal(warning, link.href);
+        }
+    });
+});
+
+// Función para mostrar el modal de advertencia
+function showModal(message, url) {
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+
+    const modalContent = document.createElement('div');
+    modalContent.className = 'modalcontent';
+
+    const closeButton = document.createElement('span');
+    closeButton.className = 'close';
+    closeButton.textContent = '×';
+    closeButton.addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    const title = document.createElement('h2');
+    title.textContent = 'Advertencia';
+
+    const paragraph = document.createElement('p');
+    paragraph.textContent = message;
+
+    const continueButton = document.createElement('button');
+    continueButton.className = 'btn';
+    continueButton.textContent = 'Continuar';
+    continueButton.addEventListener('click', () => {
+        document.body.removeChild(modal); // Cerrar el modal
+        window.location.href = url; // Redirigir al URL
+    });
+
+    modalContent.appendChild(closeButton;
+    modalContent.appendChild(title);
+    modalContent.appendChild(paragraph);
+    modalContent.appendChild(continueButton);
+
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    // Mostrar el modal
+    modal.style.display = 'flex';
 }
-
-    // Función para mostrar el modal de advertencia
-    function showModal(message, url) {
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-
-        const modalContent = document.createElement('div');
-        modalContent.className = 'modal-content';
-
-        const closeButton = document.createElement('span');
-        closeButton.className = 'close';
-        closeButton.textContent = '×';
-        closeButton.addEventListener('click', () => {
-            document.body.removeChild(modal);
-        });
-
-        const title = document.createElement('h2');
-        title.textContent = 'Advertencia';
-
-        const paragraph = document.createElement('p');
-        paragraph.textContent = message;
-
-        const continueButton = document.createElement('button');
-        continueButton.className = 'btn';
-        continueButton.textContent = 'Continuar';
-        continueButton.addEventListener('click', () => {
-            window.location.href = url;
-        });
-
-        modalContent.appendChild(closeButton);
-        modalContent.appendChild(title);
-        modalContent.appendChild(paragraph);
-        modalContent.appendChild(continueButton);
-
-        modal.appendChild(modalContent);
-        document.body.appendChild(modal);
-
-        // Mostrar el modal
-        modal.style.display = 'flex';
-    }
-
     // Función para filtrar aplicaciones por búsqueda
     function filterApps(apps, query) {
         return apps.filter(app => app.name.toLowerCase().includes(query.toLowerCase()));
