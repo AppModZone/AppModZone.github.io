@@ -31,7 +31,7 @@ nav {
 }
 
 nav .logo img {
-	width: 56px;
+    width: 56px;
     height: 56px;
 }
 
@@ -80,7 +80,7 @@ main {
 /* Grid Layout for Cards */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1.5em;
     padding: 1em 0;
 }
@@ -96,6 +96,8 @@ main {
     align-items: center;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
+    width: 250px; /* Ancho fijo para las tarjetas */
+    max-width: 100%; /* Asegura que no se salga del contenedor */
 }
 
 .app-card:hover, .category-card:hover {
@@ -158,7 +160,7 @@ main {
     width: 25%; /* Ajusta el tamaño de la imagen al contenedor */
     height: 25%;
     object-fit: cover; /* Asegura que la imagen se recorte proporcionalmente si es necesario */
-	display: flex;
+    display: flex;
     justify-content: center; /* Centrado horizontal */
 }
 
@@ -279,7 +281,7 @@ main {
     }
 
     .grid-container {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(3, 1fr); /* 3 columnas en móviles */
     }
 
     #app-details .details-container {
@@ -299,7 +301,21 @@ main {
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 769px) and (max-width: 1024px) {
+    .grid-container {
+        grid-template-columns: repeat(4, 1fr); /* 4 columnas en tablets */
+    }
+
+    #app-details .screenshots img {
+        width: calc(25% - 1em);
+    }
+}
+
+@media (min-width: 1025px) {
+    .grid-container {
+        grid-template-columns: repeat(5, 1fr); /* 5 columnas en computadoras */
+    }
+
     #app-details .details-container {
         flex-direction: row;
     }
@@ -308,9 +324,10 @@ main {
         width: calc(25% - 1em);
     }
 }
+
 footer {
     background-color: #f4f4f9; /* Fondo claro para un contraste suave */
-    color: #333; /* Color de texto oscuro para buena legibilidad */
+    color: #333; /* Color de texto para buena legibilidad */
     padding: 1.5em 2em; /* Espaciado interno */
     text-align: center; /* Centrar el texto */
     font-size: 0.9em; /* Reducir un poco el tamaño del texto */
